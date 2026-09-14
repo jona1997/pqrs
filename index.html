@@ -244,14 +244,9 @@
         </div>
       </aside>
 
-      <!-- Formulario principal -->
+      <!-- Formulario principal sin 'action' explícito ni redirección de página -->
       <main class="form-card">
-        <!-- Formulario configurado con FormSubmit para enviar a jonathan.castro@grupo-jg.com -->
-        <form id="pqrsForm" action="https://formsubmit.co/jonathan.castro@grupo-jg.com" method="POST">
-          
-          <!-- Opciones de FormSubmit -->
-          <input type="hidden" name="_subject" value="Nueva PQRS recibida - Portal Palmatec">
-          <input type="hidden" name="_template" value="table">
+        <form id="pqrsForm">
           
           <!-- Selector Anónimo -->
           <div class="switch-box">
@@ -340,6 +335,41 @@
         emailInput.placeholder = "Correo electrónico *";
       }
     }
+
+    // Procesa el envío en segundo plano
+    document.getElementById('pqrsForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const submitBtn = this.querySelector('.btn-submit');
+      submitBtn.innerText = 'Enviando...';
+      submitBtn.disabled = true;
+
+      const formData = new FormData(this);
+      formData.append('_subject', 'Nueva PQRS recibida - Portal Palmatec');
+      formData.append('_template', 'table');
+      formData.append('_captcha', 'false');
+
+      fetch('https://formsubmit.co/ajax/jonathan.castro@grupo-jg.com', {
+        method: 'POST',
+        body: formData,
+        headers: { 
+          'Accept': 'application/json'
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        alert('¡Su solicitud PQRS ha sido enviada con éxito!');
+        submitBtn.innerText = 'Enviar Formulario';
+        submitBtn.disabled = false;
+        document.getElementById('pqrsForm').reset();
+        toggleAnonimo(false); // Restablece los requeridos
+      })
+      .catch(error => {
+        alert('Hubo un problema al enviar la solicitud. Intente de nuevo.');
+        submitBtn.innerText = 'Enviar Formulario';
+        submitBtn.disabled = false;
+      });
+    });
   </script>
 
 </body>
