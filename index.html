@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Institucional y PQRS - Palmatec</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary-blue: #004085;
+      --primary-dark: #002752;
+      --accent-green: #76BC21;
+      --accent-green-hover: #619c1b;
+      --bg-light: #F8FAFC;
+      --card-bg: #FFFFFF;
+      --text-dark: #1E293B;
+      --text-muted: #64748B;
+      --border-color: #E2E8F0;
+      --shadow-sm: 0 4px 6px -1px rgba(0,0,0,0.05);
+      --shadow-lg: 0 10px 25px -5px rgba(0,0,0,0.08);
+      --radius: 10px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background-color: var(--bg-light); color: var(--text-dark); line-height: 1.5; }
+
+    /* Header */
+    header { background: #fff; padding: 1.2rem 2rem; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between; }
+    header img { height: 48px; object-fit: contain; }
+
+    /* Hero Banner */
+    .hero-banner-container {
+      width: 100%;
+      height: 380px;
+      position: relative;
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-blue) 100%);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .hero-banner-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+      opacity: 0.35;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      color: #fff;
+      padding: 0 1rem;
+    }
+
+    .hero-content h1 { font-size: 2.2rem; font-weight: 700; margin-bottom: 0.5rem; letter-spacing: -0.5px; }
+    .hero-content p { color: #E2E8F0; font-size: 1.05rem; max-width: 600px; margin: 0 auto; }
+
+    /* Form Section */
+    .contact-section {
+      max-width: 1140px;
+      margin: -2rem auto 4rem;
+      padding: 0 1.5rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 2rem;
+    }
+
+    /* Sidebar Info */
+    .info-card {
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border-color);
+      height: fit-content;
+    }
+    
+    .info-card h3 { color: var(--primary-blue); font-size: 1.1rem; margin-bottom: 1.2rem; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+    .info-item { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 1.2rem; font-size: 0.95rem; color: var(--text-muted); }
+    .info-item i { color: var(--accent-green); font-size: 1.2rem; margin-top: 2px; }
+    .divider { height: 1px; background: var(--border-color); margin: 1.5rem 0; }
+
+    /* Form Card */
+    .form-card {
+      background: var(--card-bg);
+      padding: 2.5rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border-color);
+    }
+
+    .form-group { margin-bottom: 1.5rem; }
+    .form-group label { display: block; font-weight: 600; font-size: 0.9rem; margin-bottom: 0.5rem; color: var(--text-dark); }
+    
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+
+    input[type="text"], input[type="email"], input[type="tel"], textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      background-color: #F8FAFC;
+      transition: all 0.2s ease;
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary-blue);
+      background-color: #FFF;
+      box-shadow: 0 0 0 3px rgba(0, 64, 133, 0.15);
+    }
+
+    /* Radio Group Selector */
+    .radio-group { display: flex; gap: 10px; flex-wrap: wrap; }
+    
+    .radio-card {
+      position: relative;
+      flex: 1;
+      min-width: 130px;
+    }
+
+    .radio-card input { display: none; }
+
+    .radio-card label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      background: #F8FAFC;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+
+    .radio-card input:checked + label {
+      background-color: var(--primary-blue);
+      color: #fff;
+      border-color: var(--primary-blue);
+    }
+
+    /* Switch Box Anónimo */
+    .switch-box {
+      background: #F0FDF4;
+      padding: 1.2rem;
+      border-radius: 8px;
+      border: 1px solid #DCFCE7;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .switch-box-text strong { color: #166534; font-size: 0.95rem; }
+    .switch-box-text p { color: #15803D; font-size: 0.8rem; margin-top: 2px; }
+
+    /* Botón */
+    .btn-submit {
+      background-color: var(--accent-green);
+      color: #FFFFFF;
+      font-weight: 600;
+      border: none;
+      padding: 14px 32px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.2s ease, transform 0.1s ease;
+      width: 100%;
+    }
+    .btn-submit:hover { background-color: var(--accent-green-hover); }
+    .btn-submit:active { transform: scale(0.99); }
+
+    @media (max-width: 850px) {
+      .contact-grid { grid-template-columns: 1fr; }
+      .grid-3 { grid-template-columns: 1fr; }
+      .contact-section { margin-top: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="palmateclogo__1_-removebg-preview.png" alt="Palmatec Logo">
+  </header>
+
+  <section class="hero-banner-container">
+    <img src="C:\Users\jging\Downloads\Atencion.png" alt="Palmatec Banner Principal" class="hero-banner-img">
+    <div class="hero-content">
+      <h1>PQRS</h1>
+      <p>Estamos para atender sus Preguntas, quejas, reclamos y sugerencias.</p>
+    </div>
+  </section>
+
+  <section class="contact-section">
+    <div class="contact-grid">
+      
+      <!-- Panel Lateral de Contacto -->
+      <aside class="info-card">
+        <h3><i class="fa-solid fa-headset"></i> Canales Directos</h3>
+        
+        <div class="info-item">
+          <i class="fa-solid fa-location-dot"></i>
+          <span>Caracol de la Vaca, Naranjo, Laurel, Corredores, Puntarenas, Costa Rica.</span>
+        </div>
+        
+        <div class="info-item">
+          <i class="fa-solid fa-envelope"></i>
+          <span>info@palmatec.cr</span>
+        </div>
+        
+        <div class="info-item">
+          <i class="fa-solid fa-phone"></i>
+          <span>+506 2783-9550</span>
+        </div>
+
+        <div class="divider"></div>
+
+        <h3><i class="fa-solid fa-clock"></i> Horarios de Atención</h3>
+        <div class="info-item">
+          <div>
+            <p style="margin-bottom: 6px;"><strong>Lunes - Viernes:</strong><br>7:00 am a 5:00 pm</p>
+            <p style="margin-bottom: 6px;"><strong>Sábado:</strong><br>7:00 am a 12:00 pm</p>
+            <p><strong>Domingo:</strong> Cerrado</p>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Formulario principal -->
+      <main class="form-card">
+        <!-- Formulario configurado con FormSubmit para enviar a jonathan.castro@grupo-jg.com -->
+        <form id="pqrsForm" action="https://formsubmit.co/jonathan.castro@grupo-jg.com" method="POST">
+          
+          <!-- Opciones de FormSubmit -->
+          <input type="hidden" name="_subject" value="Nueva PQRS recibida - Portal Palmatec">
+          <input type="hidden" name="_template" value="table">
+          
+          <!-- Selector Anónimo -->
+          <div class="switch-box">
+            <div class="switch-box-text">
+              <strong>¿Desea enviar una PQRS Anónima?</strong>
+              <p>Al marcar "Sí", los datos de contacto no serán obligatorios.</p>
+            </div>
+            <div class="radio-group">
+              <div class="radio-card">
+                <input type="radio" id="anonimo-no" name="Es_Anonimo" value="NO" checked onchange="toggleAnonimo(false)">
+                <label for="anonimo-no">No</label>
+              </div>
+              <div class="radio-card">
+                <input type="radio" id="anonimo-si" name="Es_Anonimo" value="SI" onchange="toggleAnonimo(true)">
+                <label for="anonimo-si">Sí</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Datos Personal -->
+          <div class="form-group" id="group-personal-data">
+            <label>Datos del Solicitante</label>
+            <div class="grid-3">
+              <input type="text" id="nombre" name="Nombre_Solicitante" placeholder="Nombre completo *" required>
+              <input type="email" id="email" name="Correo_Electronico" placeholder="Correo electrónico *" required>
+              <input type="tel" id="telefono" name="Telefono" placeholder="Teléfono">
+            </div>
+          </div>
+
+          <!-- Selector Tipo de Solicitud -->
+          <div class="form-group">
+            <label>Tipo de Solicitud *</label>
+            <div class="radio-group">
+              <div class="radio-card">
+                <input type="radio" id="tipo-pregunta" name="Tipo_Solicitud" value="Pregunta" checked>
+                <label for="tipo-pregunta">Pregunta</label>
+              </div>
+              <div class="radio-card">
+                <input type="radio" id="tipo-queja" name="Tipo_Solicitud" value="Queja">
+                <label for="tipo-queja">Queja / Reclamo</label>
+              </div>
+              <div class="radio-card">
+                <input type="radio" id="tipo-sugerencia" name="Tipo_Solicitud" value="Sugerencia">
+                <label for="tipo-sugerencia">Sugerencia</label>
+              </div>
+              <div class="radio-card">
+                <input type="radio" id="tipo-info" name="Tipo_Solicitud" value="Informacion">
+                <label for="tipo-info">Información</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Asunto -->
+          <div class="form-group">
+            <label for="asunto">Asunto *</label>
+            <input type="text" id="asunto" name="Asunto" placeholder="Resumen del tema principal" required>
+          </div>
+
+          <!-- Mensaje -->
+          <div class="form-group">
+            <label for="mensaje">Detalle de la solicitud *</label>
+            <textarea id="mensaje" name="Mensaje_Detalle" rows="5" placeholder="Escriba su mensaje en detalle..." required></textarea>
+          </div>
+
+          <button type="submit" class="btn-submit">Enviar Formulario</button>
+        </form>
+      </main>
+
+    </div>
+  </section>
+
+  <script>
+    function toggleAnonimo(isAnonimo) {
+      const nombreInput = document.getElementById('nombre');
+      const emailInput = document.getElementById('email');
+      
+      if (isAnonimo) {
+        nombreInput.removeAttribute('required');
+        emailInput.removeAttribute('required');
+        nombreInput.placeholder = "Nombre completo (Opcional)";
+        emailInput.placeholder = "Correo electrónico (Opcional)";
+      } else {
+        nombreInput.setAttribute('required', '');
+        emailInput.setAttribute('required', '');
+        nombreInput.placeholder = "Nombre completo *";
+        emailInput.placeholder = "Correo electrónico *";
+      }
+    }
+  </script>
+
+</body>
+</html>
